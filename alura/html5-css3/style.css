@@ -93,9 +93,6 @@ footer {
     margin-top: 20px;
 }
 
-main {
-}
-
 form {
     width: 1080px;
     margin: 40px 0;
@@ -262,5 +259,27 @@ td,th {
 
     .lista-beneficios, .imagem-beneficios {
         width: 100%;
+    }
+
+    .produtos {
+        width: 100%;
+        padding: 0px 5px;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+
+    .produtos li {
+        width: 100%;
+        display: block;
+        padding: 15px 10px;
+        margin: 0px 0px 10px;
+    }
+
+    nav ul {
+        text-align: center;
+    }
+
+    nav li:first-child {
+        margin: 0px
     }
 }
