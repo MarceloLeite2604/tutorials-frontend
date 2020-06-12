@@ -1,0 +1,8 @@
+# VSCode files
+**/.vscode
+
+# NPM Modules
+**/node_modules
+
+# Alura's Javascript course transpiled files
+alura/javascript/javascript-avancado-i-aula1/aluraframe/client/js/app

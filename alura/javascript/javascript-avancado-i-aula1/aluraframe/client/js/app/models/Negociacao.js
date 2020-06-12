@@ -1,33 +1,88 @@
-/* Negociacao class should be immutable (i. e. once defined, it fields should not be modified). This class contains some tricks to implement this behaviour. */
-class Negociacao {
+"use strict";
 
-    constructor(data, quantidade, valor) {
-        /* Fields starting with undeline should not be manipulated outside a class. Javascript will not prohibit it. It is just a convention. */
-        /* Do not use actual object on field. Instead, create a new object based on the original value. */
-        this._data = new Date(data.getTime());
-        this._quantidade = quantidade;
-        this._valor = valor;
+System.register([], function (_export, _context) {
+    "use strict";
 
-        /* Freezing an object makes its fields immutable, even if a developer tries to associate a value to its field directly. */
-        Object.freeze(this);
+    var _createClass, Negociacao;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
     }
 
-    /* Functions inside a class are called methods. */
-    /* Declaring a method with "get" prefix allows javascript to use it when the field is called. E. g. a "x = negociacao.quantidade" code line would execute "x = negociacao.getQuantidade()" instead of retrievie a "quantidade" field value. */
-    get volume() {
-        return this._quantidade * this._valor;
-    }
+    return {
+        setters: [],
+        execute: function () {
+            _createClass = function () {
+                function defineProperties(target, props) {
+                    for (var i = 0; i < props.length; i++) {
+                        var descriptor = props[i];
+                        descriptor.enumerable = descriptor.enumerable || false;
+                        descriptor.configurable = true;
+                        if ("value" in descriptor) descriptor.writable = true;
+                        Object.defineProperty(target, descriptor.key, descriptor);
+                    }
+                }
 
-    get data() {
-        /* Do not pass the original field object. Create a new object and return it. */
-        return new Date(this._data.getTime());
-    }
+                return function (Constructor, protoProps, staticProps) {
+                    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                    if (staticProps) defineProperties(Constructor, staticProps);
+                    return Constructor;
+                };
+            }();
 
-    get quantidade() {
-        return this._quantidade;
-    }
+            _export("Negociacao", Negociacao = function () {
+                function Negociacao(data, quantidade, valor) {
+                    _classCallCheck(this, Negociacao);
 
-    get valor() {
-        return this._valor;
-    }
-}
+                    /* Fields starting with undeline should not be manipulated outside a class. Javascript will not prohibit it. It is just a convention. */
+                    /* Do not use actual object on field. Instead, create a new object based on the original value. */
+                    this._data = new Date(data.getTime());
+                    this._quantidade = quantidade;
+                    this._valor = valor;
+
+                    /* Freezing an object makes its fields immutable, even if a developer tries to associate a value to its field directly. */
+                    Object.freeze(this);
+                }
+
+                /* Functions inside a class are called methods. */
+                /* Declaring a method with "get" prefix allows javascript to use it when the field is called. E. g. a "x = negociacao.quantidade" code line would execute "x = negociacao.getQuantidade()" instead of retrievie a "quantidade" field value. */
+
+
+                _createClass(Negociacao, [{
+                    key: "isEquals",
+                    value: function isEquals(outraNegociacao) {
+                        return JSON.stringify(this) == JSON.stringify(outraNegociacao);
+                    }
+                }, {
+                    key: "volume",
+                    get: function get() {
+                        return this._quantidade * this._valor;
+                    }
+                }, {
+                    key: "data",
+                    get: function get() {
+                        /* Do not pass the original field object. Create a new object and return it. */
+                        return new Date(this._data.getTime());
+                    }
+                }, {
+                    key: "quantidade",
+                    get: function get() {
+                        return this._quantidade;
+                    }
+                }, {
+                    key: "valor",
+                    get: function get() {
+                        return this._valor;
+                    }
+                }]);
+
+                return Negociacao;
+            }());
+
+            _export("Negociacao", Negociacao);
+        }
+    };
+});
+//# sourceMappingURL=Negociacao.js.map
