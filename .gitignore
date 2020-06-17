@@ -9,3 +9,6 @@ alura/javascript/javascript-avancado-i-aula1/aluraframe/client/js/app
 
 # Mac OS zip files
 **/__MACOSX
+
+# Webpack output directory.
+**/dist
