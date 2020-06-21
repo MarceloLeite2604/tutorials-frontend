@@ -1,0 +1,18 @@
+<div class="text-center mt-3 mb-3">
+    <form>
+        <input
+            class="rounded"
+            type="search"
+            placeholder="search..."
+            autofocus
+            (keyup)="debounce.next($event.target.value)">
+            <!-- The previous line is a event bind, which makas angular evaluate the attributed expression everytime the selected event occours.  -->
+    </form>
+</div>
+<!-- The expression on "[photos]" attribute contais a pipe. A pipe is a method applied on the left content of the pipe character (photos). It this case, it also receives "filter" as another parameter. -->
+<ap-photos [photos]="photos | filterByDescription: filter"></ap-photos>
+
+<ap-load-button 
+    (click)="load()" 
+    [hasMore]="hasMore">
+</ap-load-button>

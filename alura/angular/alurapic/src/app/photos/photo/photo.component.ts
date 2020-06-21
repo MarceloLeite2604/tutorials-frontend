@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
     /* It is a good practice to use a project prefix on component names (alurapic -> ap). */
