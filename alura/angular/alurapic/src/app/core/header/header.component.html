@@ -1,0 +1,20 @@
+<header class="fixed-top">
+    <nav class="navbar navbar-light bg-white">
+        <a class="navbar-brand">ALURAPIC</a>
+
+        <!-- "user$" is an observable. It is possible to use the pipe operator (|) and pass it to the async method. Angular will understand that it has to retrieve actual value from the Observable and use it. Its result will be named as "user". -->
+        <div *ngIf="(user$ | async) as user; else login">
+            <i class="fa fa-user-circle mr-1"></i>
+            <a class="mr-1">{{ user.name }}</a>
+            <a (click)="logout()">(Logout)</a>
+        </div>
+
+        <ng-template #login>
+            <span class="navbar-text">
+                <!-- If we try to navigate to "/" path, the browser will reload all our application again. To avoid it, we use "routerLink" directive to request it to redirect the user to the root path (similar to "Router.navigate" method).
+                Observation: "RouterModule" should be imported on "core.module.ts" for this to work. -->
+                <a [routerLink]="['']" >Please, login!</a>
+            </span>
+        </ng-template>
+    </nav>
+</header>
