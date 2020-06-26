@@ -18,7 +18,7 @@ export class SignInComponent implements OnInit {
         private formBuilder: FormBuilder, 
         private authService: AuthService, 
         private router: Router,
-        private platformDetectionService: PlatformDetectorService) { }
+        private platformDetectorService: PlatformDetectorService) { }
     
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
@@ -30,6 +30,11 @@ export class SignInComponent implements OnInit {
             userName: ['', Validators.required],
             password: ['', Validators.required]
         });
+        /* Here we should use a "Renderer" object like we did on "darken-on-hover" directive, but unfortunatelly on Angular's project version it is not possible to focus the element (it has been deprecated). Newer Angular versions might have solved this, but we'll to stick with that here. ¯\_(ツ)_/¯ 
+        Observation: The following condition prevents the "focus" request to run on a server side, where the DOM object is not available. */
+        if (this.platformDetectorService.isPlatformBrowser()) {
+            this.userNameImput.nativeElement.focus();
+        }
     }
 
     login() {
@@ -44,9 +49,7 @@ export class SignInComponent implements OnInit {
                 this.router.navigate(['users', userName]),
                 err => {
                     console.log(err.message);
-                    /* Here we should use a "Renderer" object like we did on "darken-on-hover" directive, but unfortunatelly on Angular's project version it is not possible to focus the element (it has been deprecated). Newer Angular versions might have solved this, but we'll to stick with that here. ¯\_(ツ)_/¯ 
-                    Observation: The following condition prevents the "focus" request to run on a server side, where the DOM object is not available. */
-                    if (this.platformDetectionService.isPlatformBrowser()) {
+                    if (this.platformDetectorService.isPlatformBrowser()) {
                         this.userNameImput.nativeElement.focus();
                     }
                     this.loginForm.reset();

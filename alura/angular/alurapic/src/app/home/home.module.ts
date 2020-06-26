@@ -6,18 +6,26 @@ import { SignInComponent } from "./signin/signin.component";
 import { VMessageModule } from "../shared/components/vmessage/vmessage.module";
 import { RouterModule } from "@angular/router";
 import { SignUpComponent } from './signup/signup.component';
+import { HomeComponent } from './home.component';
+import { HomeRoutingModule } from './home.routing.module';
+import { SignupService } from './signup/signup.service';
 /* Since SignInComponent has a page scope (it will not be used on another components), so there is not need to declare it on "export" attribute. */
 @NgModule({
     declarations: [ 
         SignInComponent,
-        SignUpComponent 
+        SignUpComponent,
+        HomeComponent 
     ],
     imports: [ 
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         VMessageModule,
-        RouterModule 
+        RouterModule,
+        HomeRoutingModule
+    ],
+    providers: [
+        SignupService
     ]
 })
 export class HomeModule { }
