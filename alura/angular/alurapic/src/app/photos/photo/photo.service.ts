@@ -24,4 +24,12 @@ export class PhotoService {
             /* Observation: When a variable has the same name as a Java object field, it is not necessary to write its name for attribution (The "{params}" object). */
             .get<Photo[]>(API + '/' + userName + '/photos', {params} );
     }
+
+    upload(description: string, allowComments: boolean, file: File) {
+        const formData = new FormData();
+        formData.append('description', description);
+        formData.append('allowComments', allowComments ? 'true' : 'false');
+        formData.append('imageFile', file);
+        return this.http.post(API + '/photos/upload', formData);
+    }
 }

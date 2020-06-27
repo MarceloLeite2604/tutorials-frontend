@@ -15,3 +15,6 @@ alura/javascript/javascript-avancado-i-aula1/aluraframe/client/js/app
 
 # Angular server database file
 **/api/data.db
+
+# Angular server image upload directory
+**/api/uploads
