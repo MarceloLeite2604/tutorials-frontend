@@ -11,6 +11,8 @@ const CLOUD = 'http://localhost:3000/imgs/';
 export class PhotoComponent {
 
     private _url;
+
+    @Input() description = '';
     
     /* @Input decorator makes url and description receive values, making them inbound properties. */
     /* @Input() url = ''; */
@@ -24,6 +26,4 @@ export class PhotoComponent {
         }
         return this._url;
     }
-
-    @Input() description = '';
 }

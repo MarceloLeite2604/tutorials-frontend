@@ -22,8 +22,16 @@ export class PhotoListComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    /*
+    By using this, Angular does not update when the same route is used, but a different parameter value is informed when "useHash" property is set as "true". To solve this, we have to subscribe on ActiveRoute "params" observable and request a change everytime the parameter has been updated.
     this.userName = this.activatedRoute.snapshot.params.userName;
     this.photos = this.activatedRoute.snapshot.data.photos;
+    */
+    this.activatedRoute.params.subscribe(params => {
+      this.userName = params.userName;
+      this.photos = this.activatedRoute.snapshot.data.photos;
+    });
+
   }
 
   load() {
