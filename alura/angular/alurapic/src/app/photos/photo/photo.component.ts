@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
-const CLOUD = 'http://localhost:3000/imgs/';
+const API = environment.ApiUrl;
 
 @Component({
     /* It is a good practice to use a project prefix on component names (alurapic -> ap). */
@@ -22,7 +23,7 @@ export class PhotoComponent {
 
     get url() {
         if (!this._url.startsWith('data')) {
-            return CLOUD + this._url;
+            return API + '/imgs/' + this._url;
         }
         return this._url;
     }

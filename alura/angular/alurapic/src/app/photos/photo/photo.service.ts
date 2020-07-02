@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Photo } from './photo';
 import { PhotoComment } from './photo-comment';
+import { map, catchError } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
-const API = 'http://localhost:3000';
+const API = environment.ApiUrl;
 
 @Injectable({providedIn: 'root'})
 export class PhotoService {
@@ -48,5 +51,21 @@ export class PhotoService {
 
     removePhoto(photoId: number) {
         return this.http.delete(API + '/photos/' + photoId);
+    }
+
+    like(photoId: number) {
+        return this.http
+            .post(API + '/photos/' + photoId + '/like', {}, { observe: 'response'})
+            .pipe(map(res => true ))
+            /* "catchError" catches an error on current observable and can either return a new observable or throw an error. */
+            .pipe(catchError( err => {
+                if (err.status == '304') {
+                    /* "of" creates a new observable with the specified value. */
+                    return of(false)
+                } else {
+                    /* "throwError" creates a new observable with no values which immediately throws an error. */
+                    return throwError(err); 
+                }
+            }));
     }
 }

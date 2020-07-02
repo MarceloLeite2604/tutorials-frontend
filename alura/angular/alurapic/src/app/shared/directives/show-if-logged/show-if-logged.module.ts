@@ -7,4 +7,4 @@ import { CommonModule } from '@angular/common';
     exports: [ ShowIfLoggedDirective ],
     imports: [ CommonModule ]
 })
-export class ShowIdLoggedModule {}
+export class ShowIfLoggedModule {}
