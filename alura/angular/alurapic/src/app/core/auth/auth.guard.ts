@@ -14,7 +14,14 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean |Observable<boolean> | Promise<boolean> {
 
         if (!this.userService.isLogged()) {
-            this.router.navigate(['']);
+            /* When an used tries to access a protected path and it is not logged on, the system will redirect it to home page and also add a query parameter informing the path the used tried to navigate to. We can use it later to redirect him after a successful login. */
+            this.router.navigate(
+                [''],
+                {
+                    queryParams: {
+                        fromUrl: state.url
+                    }
+                });
             return false;
         }
 

@@ -37,7 +37,8 @@ export class PhotoDetailsComponent implements OnInit {
         this.photoService.removePhoto(this.photoId).subscribe(
             () => {
                 this.alertService.success("Photo removed", true);
-                this.router.navigate(['/users', this.userService.getUserName()])
+                /* ReplaceUrl property will remove current path from navigation history and replace it by the one being navigated. This will prevent user to navigate to an invalid route (deleted photo) by clicking "back" button on browser. */
+                this.router.navigate(['/users', this.userService.getUserName()], {replaceUrl: true})
             }, 
             err => {
                 console.log(err);
