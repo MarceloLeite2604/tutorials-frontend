@@ -13,7 +13,7 @@ export class SignInComponent implements OnInit {
 
     fromUrl: string;
     loginForm: FormGroup;
-    @ViewChild('userNameInput') userNameImput: ElementRef<HTMLInputElement>;
+    @ViewChild('userNameInput', { static: true}) userNameImput: ElementRef<HTMLInputElement>;
 
     constructor(
         private formBuilder: FormBuilder, 
