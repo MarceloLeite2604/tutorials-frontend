@@ -16,7 +16,7 @@ import { userNamePassword } from './username-password.validator';
 export class SignUpComponent implements OnInit {
 
     signupForm: FormGroup;
-    @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>;
+    @ViewChild('emailInput', {static: true}) emailInput: ElementRef<HTMLInputElement>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -54,7 +54,10 @@ export class SignUpComponent implements OnInit {
                 ],
                 /* The third parameter array is for asynchronous validators. */
                 [
+                    /*
+                    Check if username has been took is disable to simplify Jasmine studies *sigh*.
                     this.userNotTakenValidatorSerice.checkUserNameTaken()
+                    */
                 ]
             ],
             password: [

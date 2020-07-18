@@ -8,3 +8,11 @@ export function lowerCaseValidator(control: AbstractControl) {
 
     return null;
 }
+
+export function isLowerCase(value: string) {
+    if (value.trim()) {
+        return /^[a-z0-9_\-]+$/.test(value);
+    }
+
+    return false;
+}
