@@ -1,14 +1,45 @@
 import React, { Component } from 'react'
 
+import FormValidator from '../../utils/FormValidator';
+import PopUp from '../../utils/PopUp';
+
 class Formulario extends Component {
 
     constructor(props) {
         super(props);
 
+        this.formValidador = new FormValidator([
+            {
+                campo: 'nome',
+                metodo: 'isEmpty',
+                validaQuando: false,
+                mensagem: 'Entre com um nome.'
+            },
+            {
+                campo: 'livro',
+                metodo: 'isEmpty',
+                validaQuando: false,
+                mensagem: 'Entre com um livro.'
+            },
+            {
+                campo: 'preco',
+                metodo: 'isInt',
+                validaQuando: true,
+                args: [
+                    {
+                        min: 0,
+                        max: 99999
+                    }
+                ],
+                mensagem: 'Entre com um valor numérico.',
+            },
+        ]);
+
         this.stateInicial = {
             nome: '',
             livro: '',
             preco: '',
+            validacao: this.formValidador.valido()
         };
 
         this.state = this.stateInicial;
@@ -24,8 +55,25 @@ class Formulario extends Component {
     }
 
     submitFormulario = () => {
-        this.props.escutadorDeSubmit(this.state);
-        this.setState(this.stateInicial);
+        const validacao = this.formValidador.valida(this.state);
+
+        if (validacao.isValid) {
+            this.props.escutadorDeSubmit(this.state);
+            this.setState(this.stateInicial);
+        } else {
+            const { nome, livro, preco } = validacao;
+
+            const campos  = [ nome, livro, preco ];
+
+            const camposInvalidos = campos.filter(elemento => {
+                return elemento.isInvalid;
+            });
+
+            camposInvalidos.forEach(campo => {
+                PopUp.exibeMensagem('error', campo.message);
+            });
+            console.log('Submit bloqueado.')
+        }
     }
 
     render() {
