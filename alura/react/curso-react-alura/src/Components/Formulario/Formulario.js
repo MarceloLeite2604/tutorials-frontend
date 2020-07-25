@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 import FormValidator from '../../utils/FormValidator';
-import PopUp from '../../utils/PopUp';
+import Toast from '../Toast/Toast'
 
 class Formulario extends Component {
 
@@ -39,7 +42,12 @@ class Formulario extends Component {
             nome: '',
             livro: '',
             preco: '',
-            validacao: this.formValidador.valido()
+            validacao: this.formValidador.valido(),
+            mensagem: {
+                open: false,
+                texto: '',
+                tipo: 'success'
+            } 
         };
 
         this.state = this.stateInicial;
@@ -69,66 +77,86 @@ class Formulario extends Component {
                 return elemento.isInvalid;
             });
 
-            camposInvalidos.forEach(campo => {
-                PopUp.exibeMensagem('error', campo.message);
+            console.log(camposInvalidos);
+
+            const erros = camposInvalidos.reduce((texto, campo) => texto + campo.message + ' ', '');
+            this.setState({
+                mensagem: {
+                    open: true,
+                    texto: erros,
+                    tipo: 'error'
+                }
             });
+
+            // camposInvalidos.forEach(campo => {
+            //     // PopUp.exibeMensagem('error', campo.message);
+            // });
             console.log('Submit bloqueado.')
         }
     }
 
+    /* "<>" is equivalent to "<React.Fragment>" */
     render() {
 
         const { nome, livro, preco } = this.state;
-
         return (
-            <form>
-                <div className="row">
-                    <div className="input-field col s4">
-                        <label 
-                            className="input-field" 
-                            htmlFor="nome">Nome</label>
-                        <input
-                            id="nome"
-                            type="text"
-                            name="nome"
-                            value={nome}
-                            onChange= { this.escutadorDeInput }
-                            className="validate" />
-                    </div>
+            <>
+                <Toast 
+                    open={this.state.mensagem.open}
+                    handleClose={() => this.setState({
+                        mensagem: {
+                            open: false
+                        }
+                    })}
+                    severity={this.state.mensagem.tipo}>
+                    {this.state.mensagem.texto}
+                </Toast>
+                <form>
+                    <Grid 
+                        container 
+                        spacing={2}
+                        alignItems='center'>
+                        <Grid item>
+                            <TextField 
+                                id='nome'
+                                label='Nome'
+                                name='nome'
+                                variant='outlined'
+                                value={nome}
+                                onChange= { this.escutadorDeInput } />
+                        </Grid>
 
-                    <div className="input-field col s4">
-                        <label  
-                            className="input-field" 
-                            htmlFor="livro">Livro</label>
-                        <input
-                            id="livro"
-                            type="text"
-                            name="livro"
-                            value={livro}
-                            onChange= { this.escutadorDeInput }
-                            className="validate" />
-                    </div>
+                        <Grid item>
+                        <TextField 
+                                id='livro'
+                                label='Livro'
+                                name='livro'
+                                variant='outlined'
+                                value={livro}
+                                onChange= { this.escutadorDeInput } />
+                        </Grid>
 
-                    <div className="input-field col s4">
-                        <label  
-                            className="input-field" 
-                            htmlFor="preco">Preço</label>
-                        <input
-                            id="preco"
-                            type="text"
-                            name="preco"
-                            value={preco}
-                            onChange= { this.escutadorDeInput }
-                            className="validate" />
-                    </div>
-
-                </div>
-                <button 
-                    type="button"
-                    onClick={ this.submitFormulario}
-                    className="waves-effect waves-light btn indigo lighten-2">Salvar
-                </button>
-            </form>
+                        <Grid item>
+                        <TextField 
+                                id='preco'
+                                label='Preço'
+                                name='preco'
+                                variant='outlined'
+                                value={preco}
+                                onChange= { this.escutadorDeInput } />
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant='contained' 
+                                color='primary'
+                                type="button"
+                                onClick={ this.submitFormulario} >
+                                    Salvar
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </form>
+            </>
         );
     }
 }

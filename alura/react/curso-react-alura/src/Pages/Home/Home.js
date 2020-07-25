@@ -9,82 +9,103 @@ import Form from '../../Components/Formulario/Formulario';
 import PopUp from '../../utils/PopUp';
 import ApiService from '../../utils/ApiService';
 
-class App extends Component {
+class Home extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      autores: []
-    };
-  }
+        this.state = {
+            autores: []
+        };
+    }
   
-  removeAutor = id => {
+    removeAutor = id => {
 
-    const { autores } = this.state;
+        const { autores } = this.state;
 
-    const autoresAtualizado = autores.filter( (autor) => {
-      return autor.id !== id;
-    })
+        const autoresAtualizado = autores.filter( (autor) => {
+            return autor.id !== id;
+        })
 
-    /* State property should always be updated by "setState" method. */
-    /* this.setState({}); */
-    
-    ApiService.RemoveAutor(id)
-      .then( res => {
-        if (res.message === 'deleted') {
-          this.setState({
-            autores: autoresAtualizado
-          });
-          PopUp.exibeMensagem('success', 'Autor removido com sucesso.');
+        ApiService.RemoveAutor(id)
+        .then( res => {
+            if (res.message === 'deleted') {
+                /* State property should always be updated by "setState" method. */
+                this.setState({
+                    autores: autoresAtualizado
+                });
+                PopUp.exibeMensagem('success', 'Autor removido com sucesso.');
+            }
+        })
+        .catch(err => {
+            PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar remover o autor.');
+        });
+    }
+
+    escutadorDeSubmit = dados => {
+        const autor = {
+            nome: dados.nome,
+            livro: dados.livro,
+            preco: dados.preco
         }
-      })
-      .catch(err => {
-        PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar remover o autor.');
-      });
-  }
+        ApiService.CriaAutor(JSON.stringify(autor))
+            .then(res => {
+                if (res.message === 'success') {
+                    this.setState({
+                        autores: [...this.state.autores, res.data]
+                    });
+                    PopUp.exibeMensagem('success', 'Autor adicionado com sucesso.');
+                }
+            })
+            .catch(err => {
+                PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar criar o autor.');
+            });
+    }
 
-  escutadorDeSubmit = autor => {
-    ApiService.CriaAutor(JSON.stringify(autor))
-      .then(res => {
-        if (res.message === 'success') {
-          this.setState({
-            autores: [...this.state.autores, res.data]
-          });
-          PopUp.exibeMensagem('success', 'Autor adicionado com sucesso.');
-        }
-      })
-      .catch(err => {
-        PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar criar o autor.');
-      });
-  }
+    /* React will execute this method right after the component has been mounted. */
+    componentDidMount() {
+        ApiService.ListaAutores()
+            .then(res => {
+                if (res.message === 'success') {
+                    this.setState({ autores: [...this.state.autores, ...res.data] })
+                }
+            })
+            .catch(err => {
+                PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar listar os autores.');
+            });
+    }
 
-  /* React will execute this method right after the component has been mounted. */
-  componentDidMount() {
-    ApiService.ListaAutores()
-    .then(res => {
-        if (res.message === 'success') {
-          this.setState({ autores: [...this.state.autores, ...res.data] })
-        }
-    })
-    .catch(err => {
-      PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar listar os autores.');
-    });
-  }
+    render() {
+        const campos = [
+            {
+                titulo: 'Autores',
+                dado: 'nome'
+            }, 
+            {
+                titulo: 'Livros',
+                dado: 'livro'
+            },
+            {
+                titulo: 'Preços',
+                dado: 'preco'
+            },
+        ];
 
-  render() {
-
-    return (
-      <Fragment>
-        <Header />
-        <div className="container mb-10">
-          <h1>Casa do código</h1>
-          <Tabela autores = { this.state.autores } removeAutor = { this.removeAutor } />
-          <Form escutadorDeSubmit = { this.escutadorDeSubmit } />
-        </div>
-      </Fragment>
-    );
-  };
+        return (
+            <Fragment>
+                <Header />
+                <div className="container mb-10">
+                    <h1>Casa do código</h1>
+                    <Form escutadorDeSubmit = { this.escutadorDeSubmit } />
+                    <Tabela 
+                        campos = {campos}
+                        dados = { this.state.autores } 
+                        removeDados = { this.removeAutor } />
+                    
+                </div>
+            </Fragment>
+        );
+    };
 }
 
-export default App;
+export default Home;
