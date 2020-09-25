@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  nginx-egghead-lesson-19:
+    image: nginx:latest
+    ports:
+        - '80:80'
+    volumes:
+        - './build:/usr/share/nginx/html:ro'
+    
