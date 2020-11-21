@@ -6,14 +6,14 @@ const $ = require('gulp-load-plugins')({
   }
 });
 
-task('copy', function() {
-  return src(['site/assets/{img,font}/**/*', 'site/app.yaml'], {base: 'site'})
-      .pipe(dest('dist'));
-});
-
 task('clean', function() {
   return src('dist/', {read: false})
       .pipe($.clean());
+});
+
+task('copy', function() {
+  return src(['site/assets/{img,font}/**/*', 'site/app.yaml'], {base: 'site'})
+      .pipe(dest('dist'));
 });
 
 task('minify-js', function() {
