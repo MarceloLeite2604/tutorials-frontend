@@ -1,5 +1,6 @@
 # VSCode files
-**/.vscode
+**/.vscode/*
+!**/.vscode/launch.json
 
 # NPM Modules
 **/node_modules
