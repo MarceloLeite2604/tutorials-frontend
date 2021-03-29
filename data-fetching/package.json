@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@react-hook/throttle": "^2.2.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -11,7 +12,6 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "lodash.throttle": "^4.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-infinite-scroller": "^1.2.4",
@@ -45,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash.throttle": "^4.1.6",
     "@types/react-infinite-scroller": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",

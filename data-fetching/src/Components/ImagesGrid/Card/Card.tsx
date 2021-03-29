@@ -4,16 +4,14 @@ import { Placeholder } from './Placeholder';
 import { Container } from './Container';
 
 import { useStyles } from './CardStyles';
-
-const imageWidth = 800;
-const imageHeight = Math.round(imageWidth * 0.5625);
+import config from '../../../config';
 
 export const ImageCard = () => {
 
   const styles = useStyles();
 
   const fetchImageState = useAsync(async () => {
-    return fetch(`https://picsum.photos/${imageWidth}/${imageHeight}`)
+    return fetch(`https://picsum.photos/${config.image.width}/${config.image.height}`)
       .then(res => {
         if (res.ok) {
           return res.blob();
